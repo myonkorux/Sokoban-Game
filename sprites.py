@@ -3,7 +3,7 @@ from silence import TILE_SIZE
 
 # directory variables
 main_dir = os.path.split(os.path.abspath(__file__))[0]
-data_dir = os.path.join(main_dir, 'data')
+data_dir = os.path.join(main_dir, 'sprites')
 
 # image constants
 WALL_IMG = 'wall.gif'
@@ -14,6 +14,7 @@ SET_BLOCK_IMG = 'block_3.gif'
 SWITCH_IMG = 'switch.gif'
 GOAL_IMG = 'cake.gif'
 INSTRUCTION_IMG = 'instructions.gif'
+TITLE_IMG = 'title.gif'
 
 # function to load image
 def load_image(name, colorkey=None):
@@ -66,9 +67,13 @@ class MoveSprite(pygame.sprite.Sprite):
     def move_right(self):
         self.x += 1
 
+class TitleScreen(TileSprite):
+    def __init__(self, screen, x, y):
+        TileSprite.__init__(self, screen, x, y, TITLE_IMG)
+
 class InstructionScreen(TileSprite):
-    def __init__(self, x, y):
-        TileSprite.__init__(self, x, y, INSTRUCTION_IMG)
+    def __init__(self, screen, x, y):
+        TileSprite.__init__(self, screen, x, y, INSTRUCTION_IMG)
 
 class CharacterSprite(TileSprite, MoveSprite):
     def __init__(self, screen, x, y):
