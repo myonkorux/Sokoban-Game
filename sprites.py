@@ -15,6 +15,7 @@ SWITCH_IMG = 'switch.gif'
 GOAL_IMG = 'cake.gif'
 INSTRUCTION_IMG = 'instructions.gif'
 TITLE_IMG = 'title.gif'
+END_IMG = 'end.gif'
 
 # function to load image
 def load_image(name, colorkey=None):
@@ -70,6 +71,10 @@ class MoveSprite(pygame.sprite.Sprite):
 class TitleScreen(TileSprite):
     def __init__(self, screen, x, y):
         TileSprite.__init__(self, screen, x, y, TITLE_IMG)
+
+class EndScreen(TileSprite):
+    def __init__(self, screen, x, y):
+        TileSprite.__init__(self, screen, x, y, END_IMG)
 
 class InstructionScreen(TileSprite):
     def __init__(self, screen, x, y):

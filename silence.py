@@ -4,6 +4,7 @@ from pygame.locals import *
 from maps import *
 from sprites import *
 from dialogue import *
+from audio import *
 
 # screen constants
 SCREEN_X = 176
@@ -29,7 +30,7 @@ def setup():
     # initialize pygame and variables
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_X, SCREEN_Y))
-    pygame.display.set_caption('Blocks')
+    pygame.display.set_caption('Silence')
     pygame.mouse.set_visible(0)
     return screen
 
@@ -64,7 +65,11 @@ def run_scene(scene):
                 main_loop()
             elif event.key == K_RETURN:
                 LEVEL_COUNTER += 1
-                main_loop()
+                increase_volume()
+                if LEVEL_COUNTER < len(MAPLIST):
+                    main_loop()
+                else:
+                    sys.exit()
     scene.update()
     pygame.display.flip()
 
@@ -104,6 +109,8 @@ def run_game(dialogues):
                     return 'next'
             elif event.key == K_LSHIFT:
                 LEVEL_COUNTER += 1
+                increase_volume()
+                cut_tracks()
                 if LEVEL_COUNTER < len(MAPLIST):
                     main_loop()
                 else:
@@ -178,7 +185,10 @@ def check_win(switches, switch_counter, goals, character):
     # check level end
     global LEVEL_COUNTER
     if switch_check and goal_check:
+        play_sound()
         LEVEL_COUNTER += 1
+        increase_volume()
+        cut_tracks()
         if LEVEL_COUNTER < len(MAPLIST):
             main_loop()
         else:
@@ -204,10 +214,13 @@ def main_loop():
 
     # check if level is a scene
     if TRANSMAP[0][0] == SCENE:
-        scene = TitleScreen(screen, 0, 0)
+        if TRANSMAP[1][0] == 2:
+            scene = TitleScreen(screen, 0, 0)
+        elif TRANSMAP[1][0] == 3:
+            stop_music()
+            scene = EndScreen(screen, 0, 0)
         while True:
             run_scene(scene)
-            
     else:
         # read map and populate lists
         for x in range(0, SCREEN_X / TILE_SIZE):
@@ -232,12 +245,16 @@ def main_loop():
         # populate list of dialogue bubbles
         dialogues = select_dialogues(screen, character, TILE_SIZE, LEVEL_COUNTER)
 
+        # play music
+        play_tracks(len(switches))
+
         # initialize sprite positions
         update_all(walls, holes, switches, blocks, goals, setblocks, character, dialogues)
         
         while True:
             # initialize default variables
             switch_counter = 0
+            unpause_tracks()
 
             # detect key inputs
             direction = run_game(dialogues)
@@ -266,8 +283,10 @@ def main_loop():
                 for block in blocks:
                     if pygame.sprite.collide_rect(block, switch):
                         switch_counter += 1
+                        pause_track(switch_counter)
                 if pygame.sprite.collide_rect(character, switch):
                     switch_counter += 1
+                    pause_track(switch_counter)
 
             # check game end
             check_win(switches, switch_counter, goals, character)
@@ -278,6 +297,7 @@ def main_loop():
             pygame.display.flip()
 
 def main():
+    start_music()
     main_loop()
 
 if __name__ == '__main__':
