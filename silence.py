@@ -139,25 +139,25 @@ def move_block(TRANSMAP, character, direction, blocks):
         TRANSMAP[block.x][block.y] = 0
         if direction == 'up':
             if pygame.sprite.collide_rect(block, character):
-                if TRANSMAP[block.x][block.y - 1] != 1 and TRANSMAP[block.x][block.y - 1] != 2:
+                if TRANSMAP[block.x][block.y - 1] != 1 and TRANSMAP[block.x][block.y - 1] != 2 and TRANSMAP[block.x][block.y - 1] != 7:
                     block.move_up()
                 else:
                     character.move_down()
         elif direction == 'down':
             if pygame.sprite.collide_rect(block, character):
-                if TRANSMAP[block.x][block.y + 1] != 1 and TRANSMAP[block.x][block.y + 1] != 2:
+                if TRANSMAP[block.x][block.y + 1] != 1 and TRANSMAP[block.x][block.y + 1] != 2 and TRANSMAP[block.x][block.y + 1] != 7:
                     block.move_down()
                 else:
                     character.move_up()
         elif direction == 'left':
             if pygame.sprite.collide_rect(block, character):
-                if TRANSMAP[block.x - 1][block.y] != 1 and TRANSMAP[block.x - 1][block.y] != 2:
+                if TRANSMAP[block.x - 1][block.y] != 1 and TRANSMAP[block.x - 1][block.y] != 2 and TRANSMAP[block.x - 1][block.y] != 7:
                     block.move_left()
                 else:
                     character.move_right()
         elif direction == 'right':
             if pygame.sprite.collide_rect(block, character):
-                if TRANSMAP[block.x + 1][block.y] != 1 and TRANSMAP[block.x + 1][block.y] != 2:
+                if TRANSMAP[block.x + 1][block.y] != 1 and TRANSMAP[block.x + 1][block.y] != 2 and TRANSMAP[block.x + 1][block.y] != 7:
                     block.move_right()
                 else:
                     character.move_left()
