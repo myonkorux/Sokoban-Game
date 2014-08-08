@@ -13,11 +13,13 @@ TEXT_3_1 = 'text_3_1.gif'
 TEXT_3_2 = 'text_3_2.gif'
 TEXT_5_1 = 'text_5_1.gif'
 TEXT_5_2 = 'text_5_2.gif'
+TEXT_15_1 = 'text_15_1.gif'
 
 dialogue_dict = {1: [TEXT_1_1, TEXT_1_2], \
 				 2: [TEXT_2_1, TEXT_2_2], \
 				 3: [TEXT_3_1, TEXT_3_2], \
-                 5: [TEXT_5_1, TEXT_5_2]}
+                 5: [TEXT_5_1, TEXT_5_2], \
+                 15:[TEXT_15_1]}
 
 # function to load image
 def load_image(name, colorkey=None):
